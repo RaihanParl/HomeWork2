@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <ImageView
+    android:layout_width="55dp"
+    android:layout_height="43dp"
+    android:src="@drawable/edit"
+        android:id="@+id/imguser_comment"
+    tools:layout_editor_absoluteY="0dp"
+    tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/txtusername_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Curutjo"
+        android:layout_toRightOf="@+id/imguser_comment"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="80dp" />
+
+    <TextView
+        android:id="@+id/txtsekolah_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="mtsn7"
+        android:layout_toRightOf="@id/txtusername_comment"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/txtcoment_coment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/imguser_comment"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="43dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtcomment_comentall"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+</android.support.v7.widget.CardView>
+</LinearLayout>
