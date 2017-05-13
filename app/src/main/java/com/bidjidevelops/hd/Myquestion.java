@@ -18,12 +18,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bidjidevelops.hd.Adapter.AdapterComment;
 import com.bidjidevelops.hd.Adapter.AdapterMyTL;
 import com.bidjidevelops.hd.Adapter.AdapterTL;
+import com.bidjidevelops.hd.Gson.GsonComment;
 import com.bidjidevelops.hd.Gson.GsonMyTL;
 import com.bidjidevelops.hd.Gson.GsonTL;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +75,7 @@ public class Myquestion extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetails();
         Semail = user.get(SessionManager.kunci_email);
         idUser = user.get(SessionManager.idusers);
+        Toast.makeText(getActivity(), idUser, Toast.LENGTH_SHORT).show();
         data = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(getActivity());
         Spassword = user.get(SessionManager.kunci_password);
@@ -88,28 +94,38 @@ public class Myquestion extends Fragment {
     private void getSoal() {
         data.clear();
         String url = Helper.BASE_URL + "getmysoal.php";
+
         stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-//                Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show();
                 try {
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.create();
-                    gsonMyTl = gson.fromJson(response, GsonMyTL.class);
-                    AdapterMyTL adapter = new AdapterMyTL(getActivity(),gsonMyTl.dataSoal);
-                    rcSoalmy.setAdapter(adapter);
-                }
-                catch (Exception i){
-                    Toast.makeText(getActivity(), "sad", Toast.LENGTH_SHORT).show();
-                }
+                    if (
+                            String.valueOf(new JSONObject(response).getString("msg")).equals("Ada data")
+                            ) {
+                        try {
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            gsonMyTl = gson.fromJson(response, GsonMyTL.class);
+                            AdapterMyTL adapter = new AdapterMyTL(getActivity(),gsonMyTl.dataSoal);
+                            rcSoalmy.setAdapter(adapter);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+//                        Toast.makeText(Comment.this, "Belum ada komentar", Toast.LENGTH_SHORT).show();
+                    }
 
+
+                } catch (JSONException e) {
+
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), "Maaf Internet Lambat", Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> paramuserlogin = new HashMap<>();
@@ -118,6 +134,7 @@ public class Myquestion extends Fragment {
             }
         };
         requestQueue.add(stringRequest);
+
     }
 
     @Override

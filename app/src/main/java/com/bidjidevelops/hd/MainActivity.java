@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         TimelineMain timelineMain = new TimelineMain();
         FragmentManager fragmentActivity = getSupportFragmentManager();
-        fragmentActivity.beginTransaction().replace(R.id.container,timelineMain).commit();
+        fragmentActivity.beginTransaction().replace(R.id.container, timelineMain).commit();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 //        headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
@@ -157,17 +157,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             TimelineMain timelineMain = new TimelineMain();
             FragmentManager fragmentActivity = getSupportFragmentManager();
-            fragmentActivity.beginTransaction().replace(R.id.container,timelineMain).commit();        } else if (id == R.id.nav_gallery) {
-
+            fragmentActivity.beginTransaction().replace(R.id.container, timelineMain).commit();
         } else if (id == R.id.nav_slideshow) {
             Myquestion myquestion = new Myquestion();
             FragmentManager fragmentActivity = getSupportFragmentManager();
-            fragmentActivity.beginTransaction().replace(R.id.container,myquestion).commit();
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-
+            fragmentActivity.beginTransaction().replace(R.id.container, myquestion).commit();
         } else if (id == R.id.nav_send) {
             sessionManager.logout();
         }

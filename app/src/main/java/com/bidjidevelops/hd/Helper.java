@@ -15,7 +15,7 @@ public class Helper extends BaseApp {
     /*alamat utama, silahkan disesuaikan dgn ip sobat dan nama folder sobat*/
 //    public static String BASE_URL = "http://192.168.173.161/hd/";
 //    public static String BASE_URL = "http://169.254.117.181/hd/";
-    public static String BASE_URL = "http://192.168.123.172/HD/";
+    public static String BASE_URL = "http://192.168.123.252/HD/";
     public static String BASE_IMGUS = BASE_URL+"uploads/";
 
     /*fungsi cek kesamaan text*/
