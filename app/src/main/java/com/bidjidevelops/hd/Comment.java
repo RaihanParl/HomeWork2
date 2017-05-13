@@ -83,7 +83,7 @@ public class Comment extends AppCompatActivity {
     public List<GsonComment.Commentar> DataComment;
     SwipeRefreshLayout sr;
     SessionManager sessionManager;
-    String Spassword, Semail, Remail, userImager;
+    String Spassword, Semail, Remail, userImager,Sidusers;
     ArrayList<muser> data;
 
     @Override
@@ -107,15 +107,18 @@ public class Comment extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetails();
         Semail = user.get(SessionManager.kunci_email);
         Spassword = user.get(SessionManager.kunci_password);
+        Sidusers = user.get(SessionManager.idusers);
         aQuery = new AQuery(getApplicationContext());
         requestQueue = Volley.newRequestQueue(Comment.this);
         data = new ArrayList<>();
+        if (sid_usercom.equals(Sidusers)){
+          txthapus.setVisibility(View.VISIBLE);
+        }
         btnjawab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getdata();
                 insertcomment();
-                getcomment();
             }
         });
         getdata();
@@ -153,7 +156,7 @@ hapussoal();
                 }).show();
             }
         });
-
+        popupimg();
 
     }
 
@@ -401,4 +404,23 @@ public void hapussoal(){
     requestQueue.add(stringRequest);
 
 }
+public void popupimg(){
+   imgContent.setOnClickListener(new View.OnClickListener() {
+       @Override
+       public void onClick(View v) {
+           inflater = Comment.this.getLayoutInflater();
+           View content = inflater.inflate(R.layout.popimg, null);
+           PhotoView pv;
+           pv = (PhotoView)content.findViewById(R.id.pvcomment);
+           AlertDialog.Builder builder = new AlertDialog.Builder(Comment.this);
+
+           Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + sgbr_pertanyaan).placeholder(R.drawable.student).into(pv);
+           builder.setView(content);
+           AlertDialog dialog = builder.create();
+           dialog.show();
+
+       }
+   });
+}
+
 }

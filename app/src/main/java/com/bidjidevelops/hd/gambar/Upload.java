@@ -83,15 +83,14 @@ public class Upload extends AppCompatActivity implements View.OnClickListener {
         //Uploading code
         try {
             String uploadId = UUID.randomUUID().toString();
-
             //Creating a multi part request
-            new MultipartUploadRequest(this, uploadId, Helper.BASE_URL+"uploadnur.php")
+            new MultipartUploadRequest(this, uploadId, Helper.BASE_URL+"editimguser.php")
                     .addFileToUpload(path, "image") //Adding file
-                    .addParameter("id", id) //Adding text parameter to the request
+                    .addParameter("iduser", id) //Adding text parameter to the request
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the Upload
-            Toast.makeText(this, "berhasil menambah dan id == "+id, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "berhasil menambah dan id == "+id, Toast.LENGTH_SHORT).show();
 //            startActivity(new Intent(getApplicationContext(), MainActivity.class));
             ;
         } catch (Exception exc) {

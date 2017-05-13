@@ -21,6 +21,7 @@ public class SessionManager {
     private static final String is_upload = "isupload";
     public static final String kunci_email = "keyemail";
     public static final String kunci_password = "keypass";
+    public static final String idusers = "iduser";
 
     public SessionManager(Context context) {
         this.context = context;
@@ -32,6 +33,11 @@ public class SessionManager {
         editor.putBoolean(is_login, true);
         editor.putString(kunci_email, email);
         editor.putString(kunci_password, psw);
+        editor.commit();
+    }
+    public void createSessionid(String iduser){
+        editor.putBoolean(is_login, true);
+        editor.putString(idusers, iduser);
         editor.commit();
     }
 
@@ -48,25 +54,9 @@ public class SessionManager {
             context.startActivity(i);
         }
     }
-    public void checkupload(){
-        if (!this.is_upload()){
-            Intent i = new Intent(context, Upload.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-        }else {
-            Intent i = new Intent(context, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-        }
-    }
 
     private boolean is_login() {
         return pref.getBoolean(is_login, false);
-    }
-    private boolean is_upload() {
-        return pref.getBoolean(is_upload, false);
     }
 
     public void logout(){
@@ -83,6 +73,7 @@ public class SessionManager {
         user.put(pref_name, pref.getString(pref_name, null));
         user.put(kunci_email, pref.getString(kunci_email, null));
         user.put(kunci_password, pref.getString(kunci_password, null));
+        user.put(idusers, pref.getString(idusers, null));
         return user;
     }
 

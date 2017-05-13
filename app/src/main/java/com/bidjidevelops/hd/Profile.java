@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.bidjidevelops.hd.gambar.Upload;
 import com.bumptech.glide.Glide;
+import com.jaouan.revealator.Revealator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,21 +41,19 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import uk.co.senab.photoview.PhotoView;
 
 public class Profile extends AppCompatActivity {
     ArrayList<muser> data;
+    PhotoView pvcomment;
     private LayoutInflater inflater;
 
-    @BindView(R.id.imgprof)
-    CircleImageView imgprof;
-    @BindView(R.id.txtnamanya)
+    ImageView imgprof;
     TextView txtnamanya;
-    @BindView(R.id.txtEmailnya)
     TextView txtEmailnya;
-    @BindView(R.id.txtEmail)
     TextView txtEmail;
-    @BindView(R.id.txtSekolahnya)
     TextView txtSekolahnya;
+    FrameLayout frameProfile;
     String email, username, sekolah;
     String Spassword, Semail, Remail, userImager;
     public AQuery aQuery;
@@ -68,16 +68,39 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        ButterKnife.bind(this);
+        pvcomment = (PhotoView)findViewById(R.id.pvcomment);
+        imgprof = (ImageView)findViewById(R.id.imgprof);
+        txtEmail = (TextView)findViewById(R.id.txtEmail);
+        txtEmailnya = (TextView)findViewById(R.id.txtEmailnya);
+        txtSekolahnya = (TextView)findViewById(R.id.txtSekolahnya);
+        txtnamanya = (TextView)findViewById(R.id.txtnamanya);
         data = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
         sessionManager = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = sessionManager.getUserDetails();
+        final HashMap<String, String> user = sessionManager.getUserDetails();
+        frameProfile = (FrameLayout) findViewById(R.id.frameProfile);
         aQuery = new AQuery(getApplicationContext());
         Semail = user.get(SessionManager.kunci_email);
 //        Toast.makeText(Profile.this, Semail, Toast.LENGTH_SHORT).show();
         Spassword = user.get(SessionManager.kunci_password);
         getdata();
+
+//        imgprof.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imgprof.setVisibility(View.INVISIBLE);
+//                getdata();
+//                Toast.makeText(getApplicationContext(), "" + userImager, Toast.LENGTH_SHORT).show();
+//                Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(pvcomment);
+//                Revealator.reveal(frameProfile)
+//                        .from(imgprof)
+//                        .withCurvedTranslation()
+//                        .withChildsAnimation()
+//                        .start();
+//
+//            }
+//        });
+        popupimg();
     }
 
     public void getdata() {
@@ -110,7 +133,6 @@ public class Profile extends AppCompatActivity {
                             userImager = object.getString("Image");
                             sekolah = object.getString("School");
                             data.add(d);
-
                             txtnamanya.setText(username);
                             txtEmailnya.setText(email);
                             txtSekolahnya.setText(sekolah);
@@ -169,7 +191,7 @@ public class Profile extends AppCompatActivity {
                         paramsendcomment.put("school", edSekolah.getText().toString());
                         paramsendcomment.put("school", edSekolah.getText().toString());
                         paramsendcomment.put("id", id);
-                        sessionManager.createSession(edEmail.getText().toString(),Spassword);
+                        sessionManager.createSession(edEmail.getText().toString(), Spassword);
             /*menampilkan progressbar saat mengirim data*/
                         ProgressDialog pd = new ProgressDialog(getApplicationContext());
 
@@ -216,10 +238,27 @@ public class Profile extends AppCompatActivity {
     }
 
     public void Image(View v) {
-      Intent i = new Intent(getApplicationContext(),Upload.class);
-              i.putExtra("id_user",id);
+        Intent i = new Intent(getApplicationContext(), Upload.class);
+        i.putExtra("id_user", id);
         startActivity(i);
 
     }
+    public void popupimg(){
+        imgprof.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inflater = Profile.this.getLayoutInflater();
+                View content = inflater.inflate(R.layout.popimg, null);
+                PhotoView pv;
+                pv = (PhotoView)content.findViewById(R.id.pvcomment);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
 
+                Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(pv);
+                builder.setView(content);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
+    }
 }

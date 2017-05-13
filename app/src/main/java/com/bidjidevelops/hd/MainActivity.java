@@ -243,34 +243,5 @@ public class MainActivity extends AppCompatActivity
     public void onclick() {
 
     }
-
-//    public void getSoal() {
-//        data.clear();
-//        String url = Helper.BASE_URL + "getsoalall.php";
-//        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-//                try {
-//                    GsonBuilder builder = new GsonBuilder();
-//                    Gson gson = builder.create();
-//                    gsonTL = gson.fromJson(response, GsonTL.class);
-//                    AdapterTL adapter = new AdapterTL(MainActivity.this, gsonTL.dataSoal);
-//                    rcSoal.setAdapter(adapter);
-//                }
-//                catch (Exception i){
-//                    Toast.makeText(MainActivity.this, "sad", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(getApplicationContext(), "Maaf Internet Lambat", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        requestQueue.add(stringRequest);
-//    }
-//}
 }
 

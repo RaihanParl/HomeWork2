@@ -306,9 +306,6 @@ public class AddSoal extends AppCompatActivity implements View.OnClickListener {
             paramsendcomment.put("pertanyaan",editText.getText().toString());
             paramsendcomment.put("id_user", id);
 
-            paramsendcomment.put("image"," ");
-
-
             /*menampilkan progressbar saat mengirim data*/
             ProgressDialog pd = new ProgressDialog(getApplicationContext());
             try {

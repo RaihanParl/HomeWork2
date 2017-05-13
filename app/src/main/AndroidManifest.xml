@@ -13,20 +13,27 @@
         <activity android:name=".Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RegisterActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <activity android:name=".Profile" />
         <activity android:name=".AddSoal" />
-        <activity android:name=".gambar.Upload"></activity>
-        <activity android:name=".Comment"></activity>
+        <activity android:name=".gambar.Upload"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Comment"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

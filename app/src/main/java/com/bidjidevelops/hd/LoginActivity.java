@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
@@ -13,6 +14,7 @@ import com.androidquery.callback.AjaxStatus;
 import com.bidjidevelops.hd.gambar.Upload;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,6 +27,7 @@ public class LoginActivity extends BaseApp {
     private TextView loglblRegister;
     private Button logbtnLogin;
     SessionManager sessionManager;
+    String iduser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +38,11 @@ public class LoginActivity extends BaseApp {
             @Override
             public void onClick(View view) {
                 view.startAnimation(BtnAnimasi);
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+//                sessionManager = new SessionManager(getApplicationContext());
+//                HashMap<String, String> user = sessionManager.getUserDetails();
+//                String Semail = user.get(SessionManager.idusers);
+//                Toast.makeText(context, Semail, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
             }
         });
 
@@ -87,9 +94,15 @@ public class LoginActivity extends BaseApp {
                                 String result = jsonObject.getString("result");
                                 String msg = jsonObject.getString("msg");
                                 if (result.equalsIgnoreCase("true")) {
+                                    JSONArray jsonArray = jsonObject.getJSONArray("user");
+                                    for (int a = 0; a < jsonArray.length(); a++) {
+                                        JSONObject o = jsonArray.getJSONObject(a);
+                                        iduser = o.getString("iduser");
+                                    }
                                     startActivity(new Intent(context, MainActivity.class));
                                     Helper.pesan(context, msg);
                                     sessionManager.createSession(logtxtEmail.getText().toString(),logtxtPassword.getText().toString());
+                                    sessionManager.createSessionid(iduser);
                                     finish();
                                 } else {
                                     Helper.pesan(context, msg);

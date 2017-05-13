@@ -42,14 +42,14 @@
     <TextView
         android:id="@+id/txtcoment_coment"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="47dp"
         android:layout_below="@id/imguser_comment"
         android:text="TextView"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="43dp" />
+/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/imguser_comment"
                 android:id="@+id/txtcomment_comentall"
                 android:visibility="gone"/>
 

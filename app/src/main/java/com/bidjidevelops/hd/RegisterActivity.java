@@ -117,7 +117,11 @@ public class RegisterActivity  extends BaseApp {
                                     Helper.pesan(context, msg);
                                     finish();
                                 } else {
-                                    Helper.pesan(context, msg);
+                                    if(msg.equals("email sudah ada")){
+                                        regtxtEmail.setError(msg);
+                                    }else {
+                                        Helper.pesan(context,msg);
+                                    }
                                 }
 
                             } catch (JSONException e) {
