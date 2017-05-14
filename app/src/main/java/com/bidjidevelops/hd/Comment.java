@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,8 +57,8 @@ public class Comment extends AppCompatActivity {
     TextView txthapus;
     @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
-    @BindView(R.id.lvRc)
-    LinearLayout lvRc;
+    @BindView(R.id.rcComentSoalmore10)
+    RecyclerView rcComentSoalmore10;
     private LayoutInflater inflater;
     @BindView(R.id.imguser)
     CircleImageView imguser;
@@ -97,6 +96,8 @@ public class Comment extends AppCompatActivity {
         ButterKnife.bind(this);
         LinearLayoutManager linearmanager = new LinearLayoutManager(Comment.this);
         rcComentSoal10.setLayoutManager(linearmanager);
+        LinearLayoutManager linearmanager2 = new LinearLayoutManager(Comment.this);
+        rcComentSoalmore10.setLayoutManager(linearmanager2);
 //        munculhapus();
 
         id_pertanyaan = getIntent().getStringExtra("id_pertanyaan");
@@ -130,7 +131,6 @@ public class Comment extends AppCompatActivity {
         getcomment();
         settextandimage();
         getdata();
-        Toast.makeText(this, ""+banyaka, Toast.LENGTH_SHORT).show();
         sr = (SwipeRefreshLayout) findViewById(R.id.refresh);
         sr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -177,13 +177,20 @@ public class Comment extends AppCompatActivity {
                             String.valueOf(new JSONObject(response).getString("msg")).equals("Ada data")
                             ) {
                         try {
-                            String banyak= String.valueOf(new JSONObject(response).getString("banyak"));
+                            String banyak = String.valueOf(new JSONObject(response).getString("banyak"));
                             banyaka = Integer.parseInt(banyak);
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             gsonComment = gson.fromJson(response, GsonComment.class);
-                            AdapterComment adapter = new AdapterComment(Comment.this, gsonComment.DataComment);
-                            rcComentSoal10.setAdapter(adapter);
+                            if (banyaka >= 10) {
+                                AdapterComment adapter = new AdapterComment(Comment.this, gsonComment.DataComment);
+                                rcComentSoalmore10.setAdapter(adapter);
+                                rcComentSoalmore10.setVisibility(View.VISIBLE);
+                                rcComentSoal10.setVisibility(View.GONE);
+                            } else {
+                                AdapterComment adapter = new AdapterComment(Comment.this, gsonComment.DataComment);
+                                rcComentSoal10.setAdapter(adapter);
+                            }
 
 
                         } catch (Exception e) {
