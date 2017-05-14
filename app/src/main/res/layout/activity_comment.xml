@@ -94,11 +94,18 @@
 
                     </LinearLayout>
                 </LinearLayout>
+
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rcComentSoal"
+                    android:id="@+id/rcComentSoal10"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:visibility="gone"
+                    android:layout_height="300dp"/>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rcComentSoalmore10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
                 </android.support.v7.widget.RecyclerView>
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

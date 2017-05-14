@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,12 +51,15 @@ import uk.co.senab.photoview.PhotoView;
 
 
 public class Comment extends AppCompatActivity {
+    int banyaka;
     String id_pertanyaan, susername, simage_user, ssekolah, swaktuSoal, sgbr_pertanyaan, spertanyaan, sidpertanyaan, sid_user, sid_usercom;
     GsonComment gsonComment;
     @BindView(R.id.txthapus)
     TextView txthapus;
     @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
+    @BindView(R.id.lvRc)
+    LinearLayout lvRc;
     private LayoutInflater inflater;
     @BindView(R.id.imguser)
     CircleImageView imguser;
@@ -76,14 +80,14 @@ public class Comment extends AppCompatActivity {
     Button btnjawab;
     @BindView(R.id.cardview)
     CardView cardview;
-    @BindView(R.id.rcComentSoal)
-    RecyclerView rcComentSoal;
+    @BindView(R.id.rcComentSoal10)
+    RecyclerView rcComentSoal10;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
     public List<GsonComment.Commentar> DataComment;
     SwipeRefreshLayout sr;
     SessionManager sessionManager;
-    String Spassword, Semail, Remail, userImager,Sidusers;
+    String Spassword, Semail, Remail, userImager, Sidusers;
     ArrayList<muser> data;
 
     @Override
@@ -92,8 +96,9 @@ public class Comment extends AppCompatActivity {
         setContentView(R.layout.activity_comment);
         ButterKnife.bind(this);
         LinearLayoutManager linearmanager = new LinearLayoutManager(Comment.this);
-        rcComentSoal.setLayoutManager(linearmanager);
+        rcComentSoal10.setLayoutManager(linearmanager);
 //        munculhapus();
+
         id_pertanyaan = getIntent().getStringExtra("id_pertanyaan");
         susername = getIntent().getStringExtra("username");
         ssekolah = getIntent().getStringExtra("sekolah");
@@ -111,8 +116,8 @@ public class Comment extends AppCompatActivity {
         aQuery = new AQuery(getApplicationContext());
         requestQueue = Volley.newRequestQueue(Comment.this);
         data = new ArrayList<>();
-        if (sid_usercom.equals(Sidusers)){
-          txthapus.setVisibility(View.VISIBLE);
+        if (sid_usercom.equals(Sidusers)) {
+            txthapus.setVisibility(View.VISIBLE);
         }
         btnjawab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,14 +130,14 @@ public class Comment extends AppCompatActivity {
         getcomment();
         settextandimage();
         getdata();
-
+        Toast.makeText(this, ""+banyaka, Toast.LENGTH_SHORT).show();
         sr = (SwipeRefreshLayout) findViewById(R.id.refresh);
         sr.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 sr.setRefreshing(false);
                 getdata();
-                       getcomment();
+                getcomment();
 
             }
         });
@@ -145,7 +150,7 @@ public class Comment extends AppCompatActivity {
                 a.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-hapussoal();
+                        hapussoal();
                     }
                 });
                 a.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
@@ -172,11 +177,15 @@ hapussoal();
                             String.valueOf(new JSONObject(response).getString("msg")).equals("Ada data")
                             ) {
                         try {
+                            String banyak= String.valueOf(new JSONObject(response).getString("banyak"));
+                            banyaka = Integer.parseInt(banyak);
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             gsonComment = gson.fromJson(response, GsonComment.class);
                             AdapterComment adapter = new AdapterComment(Comment.this, gsonComment.DataComment);
-                            rcComentSoal.setAdapter(adapter);
+                            rcComentSoal10.setAdapter(adapter);
+
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -300,7 +309,7 @@ hapussoal();
                             sid_user = object.getString("iduser");
                             userImager = object.getString("Image");
                             data.add(d);
-                            if(sid_user.equals(sid_usercom)){
+                            if (sid_user.equals(sid_usercom)) {
                                 txthapus.setVisibility(View.VISIBLE);
                             }
                             //Toast.makeText(MainActivity.this, userImager, Toast.LENGTH_SHORT).show();
@@ -351,76 +360,77 @@ hapussoal();
 
 
     }
-public void hapussoal(){
-    data.clear();
-    String url = Helper.BASE_URL + "deletesoal.php";
-    stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            try {
+
+    public void hapussoal() {
+        data.clear();
+        String url = Helper.BASE_URL + "deletesoal.php";
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
 //                    Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                if (response != null) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        String result = jsonObject.getString("result");
-                        String msg = jsonObject.getString("msg");
+                    if (response != null) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String result = jsonObject.getString("result");
+                            String msg = jsonObject.getString("msg");
 
                                 /*jika result adalah benar, maka pindah ke activity login dan menampilkan pesan dari server,
                                 serta mematikan activity*/
-                        if (result.equalsIgnoreCase("true")) {
+                            if (result.equalsIgnoreCase("true")) {
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //                                Helper.pesan(getApplicationContext(), msg)
 
-                        } else {
-                            Helper.pesan(getApplicationContext(), msg);
+                            } else {
+                                Helper.pesan(getApplicationContext(), msg);
+                            }
+
+                        } catch (JSONException e) {
+                            Helper.pesan(getApplicationContext(), "Error convert data json");
                         }
-
-                    } catch (JSONException e) {
-                        Helper.pesan(getApplicationContext(), "Error convert data json");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "salah masuk", Toast.LENGTH_LONG).show();
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "error parsing data", Toast.LENGTH_LONG).show();
                 }
-                else {
-                    Toast.makeText(getApplicationContext(), "salah masuk", Toast.LENGTH_LONG).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "error parsing data", Toast.LENGTH_LONG).show();
             }
-        }
 
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Toast.makeText(Comment.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }) {
-        @Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> paramuserlogin = new HashMap<>();
-            paramuserlogin.put("idpertanyaan", sidpertanyaan);
-            return paramuserlogin;
-        }
-    };
-    requestQueue.add(stringRequest);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Comment.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> paramuserlogin = new HashMap<>();
+                paramuserlogin.put("idpertanyaan", sidpertanyaan);
+                return paramuserlogin;
+            }
+        };
+        requestQueue.add(stringRequest);
 
-}
-public void popupimg(){
-   imgContent.setOnClickListener(new View.OnClickListener() {
-       @Override
-       public void onClick(View v) {
-           inflater = Comment.this.getLayoutInflater();
-           View content = inflater.inflate(R.layout.popimg, null);
-           PhotoView pv;
-           pv = (PhotoView)content.findViewById(R.id.pvcomment);
-           AlertDialog.Builder builder = new AlertDialog.Builder(Comment.this);
+    }
 
-           Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + sgbr_pertanyaan).placeholder(R.drawable.student).into(pv);
-           builder.setView(content);
-           AlertDialog dialog = builder.create();
-           dialog.show();
+    public void popupimg() {
+        imgContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inflater = Comment.this.getLayoutInflater();
+                View content = inflater.inflate(R.layout.popimg, null);
+                PhotoView pv;
+                pv = (PhotoView) content.findViewById(R.id.pvcomment);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Comment.this);
 
-       }
-   });
-}
+                Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + sgbr_pertanyaan).placeholder(R.drawable.student).into(pv);
+                builder.setView(content);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
+    }
 
 }
