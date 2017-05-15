@@ -33,20 +33,21 @@
             android:text="Login User"
             android:textSize="26dp" />
 
+
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/regtxtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView"
-            android:layout_marginTop="55dp"
-            android:hint="User name"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
+            android:hint="Username"
             android:lines="1"
             app:met_baseColor="#2e8ece"
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
-            app:met_iconLeft="@drawable/ic_email"
+            app:met_iconLeft="@drawable/username"
             app:met_primaryColor="#fc1e94" />
-
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/regtxtemail"
             android:layout_width="match_parent"
@@ -59,7 +60,7 @@
             app:met_baseColor="#2e8ece"
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
-            app:met_iconLeft="@drawable/ic_email"
+            app:met_iconLeft="@drawable/email"
             app:met_primaryColor="#fc1e94" />
 
         <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
@@ -72,6 +73,7 @@
             app:met_baseColor="#2e8ece"
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
+            app:met_iconLeft="@drawable/school"
             app:met_primaryColor="#fc1e94" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -81,10 +83,12 @@
             android:layout_below="@id/regtxtschool"
             android:layout_marginTop="1dp"
             android:hint="Password"
+            android:inputType="textPassword"
             android:lines="1"
             app:met_baseColor="#2e8ece"
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
+            app:met_iconLeft="@drawable/password"
             app:met_primaryColor="#fc1e94" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -94,10 +98,12 @@
             android:layout_below="@id/regtxtPassword1"
             android:layout_marginTop="1dp"
             android:hint="Password"
+            android:inputType="textPassword"
             android:lines="1"
             app:met_baseColor="#2e8ece"
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
+            app:met_iconLeft="@drawable/password"
             app:met_primaryColor="#fc1e94" />
 
         <Button

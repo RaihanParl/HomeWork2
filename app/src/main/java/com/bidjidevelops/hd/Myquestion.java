@@ -75,7 +75,7 @@ public class Myquestion extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetails();
         Semail = user.get(SessionManager.kunci_email);
         idUser = user.get(SessionManager.idusers);
-        Toast.makeText(getActivity(), idUser, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), idUser, Toast.LENGTH_SHORT).show();
         data = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(getActivity());
         Spassword = user.get(SessionManager.kunci_password);

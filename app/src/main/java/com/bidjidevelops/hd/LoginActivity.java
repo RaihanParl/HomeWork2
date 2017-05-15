@@ -60,7 +60,7 @@ public class LoginActivity extends BaseApp {
 
         /*check kebaradan teks*/
         if (Helper.isEmpty(logtxtEmail)) {
-            logtxtEmail.setError("Email masih kosong");
+            logtxtEmail.setError("email masih kosong");
             logtxtEmail.requestFocus();
         } else if (Helper.isEmpty(logtxtPassword)) {
             logtxtPassword.setError("Password masih kosong");

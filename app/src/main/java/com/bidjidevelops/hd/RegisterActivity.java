@@ -54,7 +54,7 @@ public class RegisterActivity  extends BaseApp {
         regtxtPassword2.setError(null);
         /*check keberadaan teks*/
         if (Helper.isEmpty(regtxtEmail)) {
-            regtxtEmail.setError("Email masih kosong");
+            regtxtEmail.setError("email masih kosong");
             regtxtEmail.requestFocus();
         } else if (Helper.isEmailValid(regtxtEmail)) {
             regtxtEmail.setError("Format email salah");
@@ -125,7 +125,7 @@ public class RegisterActivity  extends BaseApp {
                                 }
 
                             } catch (JSONException e) {
-                                Helper.pesan(context, "Error convert data json");
+                                Helper.pesan(context, "internet lambat");
                             }
                         }
                     }

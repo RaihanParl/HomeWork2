@@ -182,7 +182,7 @@ public class Comment extends AppCompatActivity {
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             gsonComment = gson.fromJson(response, GsonComment.class);
-                            if (banyaka >= 10) {
+                            if (banyaka >= 3) {
                                 AdapterComment adapter = new AdapterComment(Comment.this, gsonComment.DataComment);
                                 rcComentSoalmore10.setAdapter(adapter);
                                 rcComentSoalmore10.setVisibility(View.VISIBLE);
