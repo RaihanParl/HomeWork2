@@ -95,7 +95,7 @@ public class RegisterActivity  extends BaseApp {
             pd.setInverseBackgroundForced(false);
             pd.setCanceledOnTouchOutside(false);
             pd.setTitle("Info");
-            pd.setMessage("Sedang menambah data");
+            pd.setMessage("Register");
             pd.show();
 
             try {

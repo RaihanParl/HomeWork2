@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/bglogo"
+            android:id="@+id/logoreal"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
@@ -47,7 +47,7 @@
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/username"
-            app:met_primaryColor="#fc1e94" />
+            app:met_primaryColor="@color/colorAccent" />
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/regtxtemail"
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/email"
-            app:met_primaryColor="#fc1e94" />
+            app:met_primaryColor="@color/colorAccent" />
 
         <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
             android:id="@+id/regtxtschool"
@@ -74,7 +74,7 @@
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/school"
-            app:met_primaryColor="#fc1e94" />
+            app:met_primaryColor="@color/colorAccent" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/regtxtPassword1"
@@ -89,7 +89,7 @@
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/password"
-            app:met_primaryColor="#fc1e94" />
+            app:met_primaryColor="@color/colorAccent" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/regtxtPassword2"
@@ -104,7 +104,7 @@
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/password"
-            app:met_primaryColor="#fc1e94" />
+            app:met_primaryColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/regbtnRegister"
@@ -112,7 +112,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/regtxtPassword2"
             android:layout_marginTop="10dp"
-            android:text="Register" />
+            android:text="Register"
+            android:background="@color/warnabutton"/>
 
         <TextView
             android:id="@+id/reglblLogin"

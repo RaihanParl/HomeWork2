@@ -25,6 +25,6 @@ public class Splashscreen extends AppCompatActivity {
                 sessionManager.checkLogin();
                 finish();
             }
-        },1);
+        },5000);
     }
 }

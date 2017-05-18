@@ -48,16 +48,13 @@ public class MainActivity extends AppCompatActivity
     ArrayList<muser> data;
     public TextView txtUsername, txtEmail;
     String Spassword, Semail, Remail, userImager;
+    String email, username;
     SessionManager sessionManager;
     public ImageView imguser;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.material_design_floating_action_menu_item1)
     FloatingActionButton fabAddSoal;
-    @BindView(R.id.material_design_floating_action_menu_item2)
-    FloatingActionButton belum;
-    @BindView(R.id.material_design_floating_action_menu_item3)
-    FloatingActionButton Belum2;
     @BindView(R.id.fab)
     FloatingActionMenu fab;
     @BindView(R.id.drawer_layout)
@@ -69,7 +66,8 @@ public class MainActivity extends AppCompatActivity
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
     public NavigationView navigationView;
-
+    String Siduser,sekolah,Sdesk;
+    View header;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +75,23 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         //COY LIAT GETSOAL() TRUS TANYA KAK MURSIT
         requestQueue = Volley.newRequestQueue(MainActivity.this);
-        data = new ArrayList<>();
+        kenaldata();
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        header = navigationView.getHeaderView(0);
+        txtUsername = (TextView) header.findViewById(R.id.txtusername);
+        txtEmail = (TextView) header.findViewById(R.id.txtEmail);
+        getdata();
+        getdata();
+        getdata();
+
+        sessionManager = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = sessionManager.getUserDetails();
+        Semail = user.get(SessionManager.kunci_email);
+        Spassword = user.get(SessionManager.kunci_password);
+        Siduser = user.get(SessionManager.idusers);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -88,20 +100,24 @@ public class MainActivity extends AppCompatActivity
         TimelineMain timelineMain = new TimelineMain();
         FragmentManager fragmentActivity = getSupportFragmentManager();
         fragmentActivity.beginTransaction().replace(R.id.container, timelineMain).commit();
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 //        headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        View header = navigationView.getHeaderView(0);
+         header = navigationView.getHeaderView(0);
         imguser = (ImageView) header.findViewById(R.id.imguser);
         imguser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent a = new Intent(getApplicationContext(), Profile.class);
+                a.putExtra("iduser",Siduser);
+                a.putExtra("imageuser",userImager);
+                a.putExtra("usernam",username);
+                a.putExtra("email",email);
+                a.putExtra("sekolah",sekolah);
+                a.putExtra("desk",Sdesk);
                 startActivity(a);
             }
         });
-        txtUsername = (TextView) header.findViewById(R.id.txtusername);
-        txtEmail = (TextView) header.findViewById(R.id.txtEmail);
+
         fabAddSoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,29 +125,21 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        sessionManager = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = sessionManager.getUserDetails();
-        Semail = user.get(SessionManager.kunci_email);
-        Spassword = user.get(SessionManager.kunci_password);
+
         getdata();
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+            finish();
+//        }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -188,7 +196,6 @@ public class MainActivity extends AppCompatActivity
                         for (int a = 0; a < jsonArray.length(); a++) {
                             JSONObject object = jsonArray.getJSONObject(a);
                             muser d = new muser();
-                            String email, username;
 
                             d.setId_user(object.getString("iduser"));
                             d.setEmail(object.getString("email"));
@@ -197,9 +204,12 @@ public class MainActivity extends AppCompatActivity
                             d.setUsername(object.getString("Username"));
                             d.setUserimage(object.getString("Image"));
                             email = object.getString("email");
+                            Sdesk = object.getString("desk");
 //                                    school=object.getString("School");
                             username = object.getString("Username");
                             userImager = object.getString("Image");
+                            sekolah = object.getString("School");
+
                             data.add(d);
 
                             txtUsername.setText(username);
@@ -234,8 +244,16 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void onclick() {
-
+    public void kenaldata() {
+        data = new ArrayList<>();
     }
+//    public void ngeset(){
+//        txtUsername.setText(username);
+//        txtEmail.setText(email);
+//        //Toast.makeText(MainActivity.this, userImager, Toast.LENGTH_SHORT).show();
+//        Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(imguser);
+//    }
+
+
 }
 

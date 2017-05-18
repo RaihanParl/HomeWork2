@@ -86,7 +86,7 @@ public class Comment extends AppCompatActivity {
     public List<GsonComment.Commentar> DataComment;
     SwipeRefreshLayout sr;
     SessionManager sessionManager;
-    String Spassword, Semail, Remail, userImager, Sidusers;
+    String Spassword, Semail, Remail, userImager, Sidusers,getsekolah,getemail;
     ArrayList<muser> data;
 
     @Override
@@ -99,16 +99,29 @@ public class Comment extends AppCompatActivity {
         LinearLayoutManager linearmanager2 = new LinearLayoutManager(Comment.this);
         rcComentSoalmore10.setLayoutManager(linearmanager2);
 //        munculhapus();
-
         id_pertanyaan = getIntent().getStringExtra("id_pertanyaan");
         susername = getIntent().getStringExtra("username");
         ssekolah = getIntent().getStringExtra("sekolah");
         spertanyaan = getIntent().getStringExtra("pertanyaan");
+        getsekolah = getIntent().getStringExtra("sekolah");
+        getemail = getIntent().getStringExtra("email");
         simage_user = getIntent().getStringExtra("image_user");
         sidpertanyaan = getIntent().getStringExtra("idpertanyaan");
         sid_usercom = getIntent().getStringExtra("id_user");
         sgbr_pertanyaan = getIntent().getStringExtra("gbr_pertanyaan");
         swaktuSoal = getIntent().getStringExtra("waktuSoal");
+        imguser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(getApplicationContext(), Profile.class);
+                a.putExtra("iduser",id_pertanyaan);
+                a.putExtra("imageuser",simage_user);
+                a.putExtra("usernam",susername);
+                a.putExtra("email",getemail);
+                a.putExtra("sekolah",getsekolah);
+                startActivity(a);
+            }
+        });
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
         Semail = user.get(SessionManager.kunci_email);
@@ -226,12 +239,12 @@ public class Comment extends AppCompatActivity {
         txtUser.setText(susername);
         txtFeed.setText(spertanyaan);
         txtTanggal.setText(swaktuSoal);
-        txtTingkat.setText(ssekolah);
         Glide.with(getApplicationContext())
                 .load(Helper.BASE_IMGUS + simage_user)
                 .crossFade()
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.student)
                 .into(imguser);
+        txtTingkat.setText(ssekolah);
         Glide.with(getApplicationContext())
                 .load(Helper.BASE_IMGUS + sgbr_pertanyaan)
                 .crossFade()
@@ -247,7 +260,7 @@ public class Comment extends AppCompatActivity {
             getdata();
             paramsendcomment.put("idpertanyaan", sidpertanyaan);
             paramsendcomment.put("id_user", sid_user);
-            Toast.makeText(this, sid_user, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, sid_user, Toast.LENGTH_SHORT).show();
             paramsendcomment.put("commentar", edJawabSoal.getText().toString());
             /*menampilkan progressbar saat mengirim data*/
             ProgressDialog pd = new ProgressDialog(getApplicationContext());
@@ -275,7 +288,7 @@ public class Comment extends AppCompatActivity {
                                 }
 
                             } catch (JSONException e) {
-                                Helper.pesan(getApplicationContext(), "Error convert data json");
+                                Helper.pesan(getApplicationContext(), "Internet lambat");
                             }
                         }
                     }
@@ -359,7 +372,7 @@ public class Comment extends AppCompatActivity {
         Glide.with(getApplicationContext())
                 .load(Helper.BASE_IMGUS + sgbr_pertanyaan)
                 .crossFade()
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.student)
                 .into(imgcontent);
         builder.setView(content);
         AlertDialog dialog = builder.create();

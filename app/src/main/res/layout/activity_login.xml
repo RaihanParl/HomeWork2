@@ -19,7 +19,7 @@
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logoreal" />
 
         <TextView
             android:id="@+id/textView"
@@ -55,13 +55,14 @@
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/password"
-            app:met_primaryColor="#fc1e94" />
+            app:met_primaryColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/logbtnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/logtxtPassword"
+            android:background="@color/warnabutton"
             android:layout_marginTop="10dp"
             android:text="Login" />
 

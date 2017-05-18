@@ -68,6 +68,7 @@ public class TimelineMain extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetails();
         Semail = user.get(SessionManager.kunci_email);
         data = new ArrayList<>();
+        final MainActivity main = new MainActivity();
         requestQueue = Volley.newRequestQueue(getActivity());
         Spassword = user.get(SessionManager.kunci_password);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -76,6 +77,7 @@ public class TimelineMain extends Fragment {
                 refresh.setRefreshing(false);
                 getSoal();
                 getdata();
+//                main.ngeset();
             }
 //
         });
@@ -105,7 +107,7 @@ public class TimelineMain extends Fragment {
                     rcSoal.setAdapter(adapter);
                 }
                 catch (Exception i){
-                    Toast.makeText(getActivity(), "sad", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "sad", Toast.LENGTH_SHORT).show();
                 }
 
             }

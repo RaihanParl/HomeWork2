@@ -22,6 +22,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
         android:layout_width="80dp"
+        android:layout_gravity="center_horizontal"
         android:layout_height="80dp"
         android:layout_alignParentTop="true" />
 
@@ -38,12 +39,15 @@
             android:id="@+id/buttonChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/warnabutton"
             android:text="Select" />
 
         <Button
             android:id="@+id/buttonUpload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/warnabutton"
+            android:layout_marginLeft="10dp"
             android:enabled="false"
             android:text="Upload" />
 

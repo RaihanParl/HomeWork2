@@ -14,6 +14,7 @@ import com.bidjidevelops.hd.Comment;
 import com.bidjidevelops.hd.Gson.GsonMyTL;
 import com.bidjidevelops.hd.Gson.GsonTL;
 import com.bidjidevelops.hd.Helper;
+import com.bidjidevelops.hd.Profile;
 import com.bidjidevelops.hd.R;
 import com.bumptech.glide.Glide;
 
@@ -66,6 +67,8 @@ public class AdapterMyTL extends RecyclerView.Adapter<AdapterMyTL.ViewHolder> {
                 a.putExtra("gbr_pertanyaan",dataSoal.get(position).gbr_pertanyaan);
                 a.putExtra("waktuSoal",dataSoal.get(position).waktuSoal);
                 a.putExtra("id_user",dataSoal.get(position).idUser);
+                a.putExtra("email",dataSoal.get(position).email);
+                a.putExtra("sekolah",dataSoal.get(position).school);
                 a.putExtra("idpertanyaan",dataSoal.get(position).idpertanyaan);
                 view.getContext().startActivity(a);
             }
@@ -78,12 +81,28 @@ public class AdapterMyTL extends RecyclerView.Adapter<AdapterMyTL.ViewHolder> {
                 a.putExtra("username",dataSoal.get(position).username);
                 a.putExtra("sekolah",dataSoal.get(position).school);
                 a.putExtra("pertanyaan",dataSoal.get(position).pertanyaan);
+                a.putExtra("email",dataSoal.get(position).email);
+                a.putExtra("sekolah",dataSoal.get(position).school);
                 a.putExtra("image_user",dataSoal.get(position).image);
                 a.putExtra("gbr_pertanyaan",dataSoal.get(position).gbr_pertanyaan);
                 a.putExtra("waktuSoal",dataSoal.get(position).waktuSoal);
                 a.putExtra("id_user",dataSoal.get(position).idUser);
                 a.putExtra("idpertanyaan",dataSoal.get(position).idpertanyaan);
                 view.getContext().startActivity(a);
+
+            }
+        });
+        holder.imguser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(v.getContext(), Profile.class);
+                a.putExtra("iduser",dataSoal.get(position).idUser);
+                a.putExtra("imageuser",dataSoal.get(position).image);
+                a.putExtra("usernam",dataSoal.get(position).username);
+                a.putExtra("desk",dataSoal.get(position).desk);
+                a.putExtra("email",dataSoal.get(position).email);
+                a.putExtra("sekolah",dataSoal.get(position).school);
+                v.getContext().startActivity(a);
             }
         });
     }

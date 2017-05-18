@@ -1,6 +1,7 @@
 package com.bidjidevelops.hd.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.bidjidevelops.hd.Gson.GsonTL;
 import com.bidjidevelops.hd.Gson.GsonUser;
 import com.bidjidevelops.hd.Helper;
 import com.bidjidevelops.hd.MainActivity;
+import com.bidjidevelops.hd.Profile;
 import com.bidjidevelops.hd.R;
 import com.bumptech.glide.Glide;
 
@@ -40,7 +42,20 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(final AdapterComment.ViewHolder holder, int position) {
+    public void onBindViewHolder(final AdapterComment.ViewHolder holder, final int position) {
+        holder.imguser_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(v.getContext(), Profile.class);
+                a.putExtra("iduser",DataComment.get(position).idUser);
+                a.putExtra("imageuser",DataComment.get(position).image);
+                a.putExtra("usernam",DataComment.get(position).username);
+                a.putExtra("desk",DataComment.get(position).desk);
+                a.putExtra("email",DataComment.get(position).email);
+                a.putExtra("sekolah",DataComment.get(position).school);
+                v.getContext().startActivity(a);
+            }
+        });
         holder.txtcoment_coment.setText(DataComment.get(position).commentarnya);
         holder.txtcoment_comentall.setText(DataComment.get(position).commentarnya);
         holder.txtcoment_coment.setOnClickListener(new View.OnClickListener() {
@@ -57,12 +72,12 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.ViewHold
                 holder.txtcoment_coment.setVisibility(View.VISIBLE);
             }
         });
-        holder.txtsekolah_comment.setText(DataComment.get(position).school);
         holder.txtusername_comment.setText(DataComment.get(position).username); Glide.with(context)
                 .load(Helper.BASE_IMGUS+DataComment.get(position).image)
                 .crossFade()
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.student)
                 .into(holder.imguser_comment);
+
     }
 
     @Override
@@ -77,7 +92,6 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             txtcoment_coment = (TextView) itemView.findViewById(R.id.txtcoment_coment);
-            txtsekolah_comment = (TextView) itemView.findViewById(R.id.txtsekolah_comment);
             txtusername_comment = (TextView) itemView.findViewById(R.id.txtusername_comment);
             txtcoment_comentall = (TextView) itemView.findViewById(R.id.txtcomment_comentall);
             imguser_comment = (ImageView) itemView.findViewById(R.id.imguser_comment);

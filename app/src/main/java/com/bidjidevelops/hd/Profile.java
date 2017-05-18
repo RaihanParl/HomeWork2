@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,6 @@ import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.bidjidevelops.hd.gambar.Upload;
 import com.bumptech.glide.Glide;
-import com.jaouan.revealator.Revealator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +47,14 @@ import uk.co.senab.photoview.PhotoView;
 public class Profile extends AppCompatActivity {
     ArrayList<muser> data;
     PhotoView pvcomment;
+    @BindView(R.id.btnEdit)
+    Button btnEdit;
+    @BindView(R.id.btnEditImage)
+    Button btnEditImage;
+    @BindView(R.id.activity_profile)
+    ScrollView activityProfile;
+    @BindView(R.id.txtDesknya)
+    TextView txtDesknya;
     private LayoutInflater inflater;
 
     ImageView imgprof;
@@ -54,8 +63,9 @@ public class Profile extends AppCompatActivity {
     TextView txtEmail;
     TextView txtSekolahnya;
     FrameLayout frameProfile;
-    String email, username, sekolah;
-    String Spassword, Semail, Remail, userImager;
+    String email, username, sekolah, desk;
+    String getemail, getusername, getsekolah, getuserImager, getDesk;
+    String Spassword, Semail, Remail, userImager, getIdUser;
     public AQuery aQuery;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
@@ -63,17 +73,26 @@ public class Profile extends AppCompatActivity {
     MainActivity mainActivity;
     SessionManager sessionManager;
     String id;
+    String iduserses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        pvcomment = (PhotoView)findViewById(R.id.pvcomment);
-        imgprof = (ImageView)findViewById(R.id.imgprof);
-        txtEmail = (TextView)findViewById(R.id.txtEmail);
-        txtEmailnya = (TextView)findViewById(R.id.txtEmailnya);
-        txtSekolahnya = (TextView)findViewById(R.id.txtSekolahnya);
-        txtnamanya = (TextView)findViewById(R.id.txtnamanya);
+        ButterKnife.bind(this);
+        getIdUser = getIntent().getStringExtra("iduser");
+        getusername = getIntent().getStringExtra("usernam");
+        getuserImager = getIntent().getStringExtra("imageuser");
+        getemail = getIntent().getStringExtra("email");
+        getDesk = getIntent().getStringExtra("desk");
+        getsekolah = getIntent().getStringExtra("sekolah");
+        getIdUser = getIntent().getStringExtra("iduser");
+        pvcomment = (PhotoView) findViewById(R.id.pvcomment);
+        imgprof = (ImageView) findViewById(R.id.imgprof);
+        txtEmail = (TextView) findViewById(R.id.txtEmail);
+        txtEmailnya = (TextView) findViewById(R.id.txtEmailnya);
+        txtSekolahnya = (TextView) findViewById(R.id.txtSekolahnya);
+        txtnamanya = (TextView) findViewById(R.id.txtnamanya);
         data = new ArrayList<>();
         requestQueue = Volley.newRequestQueue(this);
         sessionManager = new SessionManager(getApplicationContext());
@@ -81,26 +100,25 @@ public class Profile extends AppCompatActivity {
         frameProfile = (FrameLayout) findViewById(R.id.frameProfile);
         aQuery = new AQuery(getApplicationContext());
         Semail = user.get(SessionManager.kunci_email);
-//        Toast.makeText(Profile.this, Semail, Toast.LENGTH_SHORT).show();
         Spassword = user.get(SessionManager.kunci_password);
-        getdata();
+        iduserses = user.get(SessionManager.idusers);
+        if (iduserses.equals(getIdUser)) {
+            btnEdit.setVisibility(View.VISIBLE);
+            btnEditImage.setVisibility(View.VISIBLE);
+            getdata();
+            getdata();
+        } else {
+            txtnamanya.setText(getusername);
+            txtEmailnya.setText(getemail);
+            txtDesknya.setText(getDesk);
+            txtSekolahnya.setText(getsekolah);
+            Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + getuserImager).placeholder(R.drawable.student).into(imgprof);
 
-//        imgprof.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                imgprof.setVisibility(View.INVISIBLE);
-//                getdata();
-//                Toast.makeText(getApplicationContext(), "" + userImager, Toast.LENGTH_SHORT).show();
-//                Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(pvcomment);
-//                Revealator.reveal(frameProfile)
-//                        .from(imgprof)
-//                        .withCurvedTranslation()
-//                        .withChildsAnimation()
-//                        .start();
-//
-//            }
-//        });
+        }
+
+
         popupimg();
+
     }
 
     public void getdata() {
@@ -120,7 +138,7 @@ public class Profile extends AppCompatActivity {
                         for (int a = 0; a < jsonArray.length(); a++) {
                             JSONObject object = jsonArray.getJSONObject(a);
                             muser d = new muser();
-
+                            String deskripsi;
                             d.setId_user(object.getString("iduser"));
                             d.setEmail(object.getString("email"));
                             d.setPassword(object.getString("password"));
@@ -131,16 +149,19 @@ public class Profile extends AppCompatActivity {
                             username = object.getString("Username");
                             id = object.getString("iduser");
                             userImager = object.getString("Image");
+                            desk = object.getString("desk");
                             sekolah = object.getString("School");
+                            deskripsi = object.getString("desk");
                             data.add(d);
                             txtnamanya.setText(username);
                             txtEmailnya.setText(email);
                             txtSekolahnya.setText(sekolah);
+                            txtDesknya.setText(deskripsi);
                             //Toast.makeText(MainActivity.this, userImager, Toast.LENGTH_SHORT).show();
                             Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(imgprof);
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), pesan, Toast.LENGTH_LONG).show();
+//                        elseToast.makeText(getApplicationContext(), pesan, Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -169,16 +190,17 @@ public class Profile extends AppCompatActivity {
     public void Edit(View v) {
         inflater = Profile.this.getLayoutInflater();
         View content = inflater.inflate(R.layout.pop_profile, null);
-        final EditText edNama, edEmail, edSekolah;
+        final EditText edNama, edEmail, edSekolah, edDesk;
         CircleImageView imgProfPo;
         Button btnImage;
         getdata();
         AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
         edNama = (EditText) content.findViewById(R.id.ednamaProf);
         edEmail = (EditText) content.findViewById(R.id.edemailprof);
+        edDesk = (EditText) content.findViewById(R.id.edDeskProf);
         edSekolah = (EditText) content.findViewById(R.id.edSekolahProf);
         imgProfPo = (CircleImageView) content.findViewById(R.id.imgprof);
-        Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(imgProfPo);
+        Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + getuserImager).placeholder(R.drawable.student).into(imgProfPo);
         builder.setView(content)
                 .setTitle("Edit profile")
                 .setPositiveButton("edit", new DialogInterface.OnClickListener() {
@@ -189,12 +211,12 @@ public class Profile extends AppCompatActivity {
                         paramsendcomment.put("email", edEmail.getText().toString());
                         paramsendcomment.put("username", edNama.getText().toString());
                         paramsendcomment.put("school", edSekolah.getText().toString());
+                        paramsendcomment.put("desk", edDesk.getText().toString());
                         paramsendcomment.put("school", edSekolah.getText().toString());
                         paramsendcomment.put("id", id);
                         sessionManager.createSession(edEmail.getText().toString(), Spassword);
             /*menampilkan progressbar saat mengirim data*/
                         ProgressDialog pd = new ProgressDialog(getApplicationContext());
-
                         try {
                 /*format ambil data*/
                             aQuery.progress(pd).ajax(URL, paramsendcomment, String.class, new AjaxCallback<String>() {
@@ -206,19 +228,17 @@ public class Profile extends AppCompatActivity {
                                             JSONObject jsonObject = new JSONObject(object);
                                             String result = jsonObject.getString("result");
                                             String msg = jsonObject.getString("msg");
-
                                 /*jika result adalah benar, maka pindah ke activity login dan menampilkan pesan dari server,
                                 serta mematikan activity*/
                                             if (result.equalsIgnoreCase("true")) {
-//                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-//                                Helper.pesan(getApplicationContext(), msg);
-                                                finish();
+                          getdata2();
+
                                             } else {
                                                 Helper.pesan(getApplicationContext(), msg);
                                             }
 
                                         } catch (JSONException e) {
-                                            Helper.pesan(getApplicationContext(), "Error convert data json");
+                                            Helper.pesan(getApplicationContext(), "internet lambat");
                                         }
                                     }
                                 }
@@ -231,6 +251,7 @@ public class Profile extends AppCompatActivity {
         edEmail.setText(email);
         edNama.setText(username);
         edSekolah.setText(sekolah);
+        edDesk.setText(desk);
         AlertDialog dialog = builder.create();
         dialog.show();
 
@@ -243,22 +264,114 @@ public class Profile extends AppCompatActivity {
         startActivity(i);
 
     }
-    public void popupimg(){
+
+    public void popupimg() {
         imgprof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inflater = Profile.this.getLayoutInflater();
                 View content = inflater.inflate(R.layout.popimg, null);
                 PhotoView pv;
-                pv = (PhotoView)content.findViewById(R.id.pvcomment);
+                pv = (PhotoView) content.findViewById(R.id.pvcomment);
                 AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
-
-                Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(pv);
+                Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + getuserImager).placeholder(R.drawable.student).into(pv);
                 builder.setView(content);
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
             }
         });
+    }
+
+    public void reveral() {
+        //        imgprof.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imgprof.setVisibility(View.INVISIBLE);
+//                getdata();
+//                Toast.makeText(getApplicationContext(), "" + userImager, Toast.LENGTH_SHORT).show();
+//                Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(pvcomment);
+//                Revealator.reveal(frameProfile)
+//                        .from(imgprof)
+//                        .withCurvedTranslation()
+//                        .withChildsAnimation()
+//                        .start();
+//
+//            }
+//        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+    }
+    public void getdata2(){
+        sessionManager = new SessionManager(getApplicationContext());
+        final HashMap<String, String> user = sessionManager.getUserDetails();
+        Semail = user.get(SessionManager.kunci_email);
+        Spassword = user.get(SessionManager.kunci_password);
+        iduserses = user.get(SessionManager.idusers);
+        data.clear();
+        String url = Helper.BASE_URL + "login.php";
+        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+//                    Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                    JSONObject json = new JSONObject(response);
+                    String result = json.getString("result");
+                    String pesan = json.getString("msg");
+                    if (result.equalsIgnoreCase("true")) {
+                        JSONArray jsonArray = json.getJSONArray("user");
+                        for (int a = 0; a < jsonArray.length(); a++) {
+                            JSONObject object = jsonArray.getJSONObject(a);
+                            muser d = new muser();
+                            String deskripsi;
+                            d.setId_user(object.getString("iduser"));
+                            d.setEmail(object.getString("email"));
+                            d.setPassword(object.getString("password"));
+                            d.setSekolah(object.getString("School"));
+                            d.setUsername(object.getString("Username"));
+                            d.setUserimage(object.getString("Image"));
+                            email = object.getString("email");
+                            username = object.getString("Username");
+                            id = object.getString("iduser");
+                            userImager = object.getString("Image");
+                            desk = object.getString("desk");
+                            sekolah = object.getString("School");
+                            deskripsi = object.getString("desk");
+                            data.add(d);
+                            txtnamanya.setText(username);
+                            txtEmailnya.setText(email);
+                            txtSekolahnya.setText(sekolah);
+                            txtDesknya.setText(deskripsi);
+                            //Toast.makeText(MainActivity.this, userImager, Toast.LENGTH_SHORT).show();
+                            Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(imgprof);
+                        }
+                    } else {
+//                        elseToast.makeText(getApplicationContext(), pesan, Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "error parsing data", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Profile.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> paramuserlogin = new HashMap<>();
+                paramuserlogin.put("email", Semail);
+                paramuserlogin.put("password", Spassword);
+                return paramuserlogin;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 }

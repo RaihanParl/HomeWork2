@@ -40,6 +40,11 @@ public class GsonTL {
         @SerializedName("Image")
         public String image;
 
+        @SerializedName("email")
+        public String email;
+
+        @SerializedName("desk")
+        public String desk;
 
     }
 }

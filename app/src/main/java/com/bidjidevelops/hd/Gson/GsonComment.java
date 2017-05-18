@@ -50,5 +50,11 @@ public class GsonComment {
 
         @SerializedName("commentar")
         public String commentarnya;
+
+        @SerializedName("email")
+        public String email;
+
+        @SerializedName("desk")
+        public String desk;
     }
 }

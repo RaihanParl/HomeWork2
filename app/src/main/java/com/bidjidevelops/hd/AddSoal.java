@@ -330,7 +330,7 @@ public class AddSoal extends AppCompatActivity implements View.OnClickListener {
                                 }
 
                             } catch (JSONException e) {
-                                Helper.pesan(getApplicationContext(), "Error convert data json");
+                                Helper.pesan(getApplicationContext(), "Internet lambat");
                             }
                         }
                     }
