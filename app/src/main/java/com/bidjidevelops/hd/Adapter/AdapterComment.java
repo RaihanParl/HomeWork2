@@ -11,10 +11,7 @@ import android.widget.TextView;
 
 import com.bidjidevelops.hd.Comment;
 import com.bidjidevelops.hd.Gson.GsonComment;
-import com.bidjidevelops.hd.Gson.GsonTL;
-import com.bidjidevelops.hd.Gson.GsonUser;
 import com.bidjidevelops.hd.Helper;
-import com.bidjidevelops.hd.MainActivity;
 import com.bidjidevelops.hd.Profile;
 import com.bidjidevelops.hd.R;
 import com.bumptech.glide.Glide;
@@ -53,6 +50,8 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.ViewHold
                 a.putExtra("desk",DataComment.get(position).desk);
                 a.putExtra("email",DataComment.get(position).email);
                 a.putExtra("sekolah",DataComment.get(position).school);
+                a.putExtra("sekolah",DataComment.get(position).school);
+                a.putExtra("coverimg",DataComment.get(position).coverimg);
                 v.getContext().startActivity(a);
             }
         });

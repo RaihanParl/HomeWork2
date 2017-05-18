@@ -3,16 +3,12 @@ package com.bidjidevelops.hd;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -66,7 +62,8 @@ public class MainActivity extends AppCompatActivity
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
     public NavigationView navigationView;
-    String Siduser,sekolah,Sdesk;
+    String Siduser,sekolah,Sdesk,Scoverimg;
+    ImageView coverImg;
     View header;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +80,7 @@ public class MainActivity extends AppCompatActivity
         header = navigationView.getHeaderView(0);
         txtUsername = (TextView) header.findViewById(R.id.txtusername);
         txtEmail = (TextView) header.findViewById(R.id.txtEmail);
+        coverImg = (ImageView) header.findViewById(R.id.coverimg);
         getdata();
         getdata();
         getdata();
@@ -172,7 +170,10 @@ public class MainActivity extends AppCompatActivity
             fragmentActivity.beginTransaction().replace(R.id.container, myquestion).commit();
         } else if (id == R.id.nav_send) {
             sessionManager.logout();
-        }
+        }else if (id == R.id.nav_about) {
+            About myquestion = new About();
+            FragmentManager fragmentActivity = getSupportFragmentManager();
+            fragmentActivity.beginTransaction().replace(R.id.container, myquestion).commit();        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -208,6 +209,7 @@ public class MainActivity extends AppCompatActivity
 //                                    school=object.getString("School");
                             username = object.getString("Username");
                             userImager = object.getString("Image");
+                            Scoverimg = object.getString("coverimg");
                             sekolah = object.getString("School");
 
                             data.add(d);
@@ -216,6 +218,7 @@ public class MainActivity extends AppCompatActivity
                             txtEmail.setText(email);
                             //Toast.makeText(MainActivity.this, userImager, Toast.LENGTH_SHORT).show();
                             Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(imguser);
+                            Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + Scoverimg).placeholder(R.drawable.real_logo).into(coverImg);
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), pesan, Toast.LENGTH_LONG).show();
@@ -229,7 +232,7 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

@@ -41,7 +41,7 @@
             app:met_errorColor="#f22a37"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/email"
-            app:met_primaryColor="#fc1e94" />
+            app:met_primaryColor="@color/colorAccent" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/logtxtPassword"
@@ -59,6 +59,7 @@
 
         <Button
             android:id="@+id/logbtnLogin"
+            android:textAllCaps="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/logtxtPassword"

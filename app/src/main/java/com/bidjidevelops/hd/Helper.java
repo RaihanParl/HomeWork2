@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class Helper extends BaseApp {
     /*alamat utama, silahkan disesuaikan dgn ip sobat dan nama folder sobat*/
-//    public static String BASE_URL = "http://192.168.123.36/hd/";
+//    public static String BASE_URL = "http://192.168.43.180/hd/";
 //    public static String BASE_URL = "http://169.254.117.181/hd/";
     public static String BASE_URL = "http://31.220.55.37/muhammadfiqri/HD/";
     public static String BASE_IMGUS = "http://31.220.55.37/muhammadfiqri/uploads/";

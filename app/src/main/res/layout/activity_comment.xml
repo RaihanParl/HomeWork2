@@ -72,7 +72,7 @@
                             android:layout_alignParentRight="true"
                             android:background="#cc1c1c"
                             android:text="X"
-                            android:textSize="10dp"
+                            android:textSize="15dp"
                             android:visibility="gone" />
                     </RelativeLayout>
 
@@ -130,6 +130,7 @@
 
                     <Button
                         android:id="@+id/btnjawab"
+                        android:textAllCaps="false"
                         android:background="@color/warnabutton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

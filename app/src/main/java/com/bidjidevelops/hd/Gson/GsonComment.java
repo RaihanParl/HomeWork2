@@ -56,5 +56,8 @@ public class GsonComment {
 
         @SerializedName("desk")
         public String desk;
+
+        @SerializedName("coverimg")
+        public String coverimg;
     }
 }

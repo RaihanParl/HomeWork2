@@ -2,7 +2,6 @@ package com.bidjidevelops.hd.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,10 +13,8 @@ import android.widget.TextView;
 import com.bidjidevelops.hd.Comment;
 import com.bidjidevelops.hd.Gson.GsonTL;
 import com.bidjidevelops.hd.Helper;
-import com.bidjidevelops.hd.MainActivity;
 import com.bidjidevelops.hd.Profile;
 import com.bidjidevelops.hd.R;
-import com.bidjidevelops.hd.TimelineMain;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -67,7 +64,7 @@ public class AdapterTL extends RecyclerView.Adapter<AdapterTL.ViewHolder> {
                 a.putExtra("email",dataSoal.get(position).email);
                 a.putExtra("sekolah",dataSoal.get(position).school);
                 a.putExtra("desk",dataSoal.get(position).desk);
-
+                a.putExtra("coverimg", dataSoal.get(position).coverimg);
                 v.getContext().startActivity(a);
             }
         });

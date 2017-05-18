@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -57,7 +58,7 @@ public class AddSoal extends AppCompatActivity implements View.OnClickListener {
     @BindView(R.id.editText)
     EditText editText;
     @BindView(R.id.imageView)
-    CircleImageView imageView;
+    ImageView imageView;
     @BindView(R.id.buttonChoose)
     Button buttonChoose;
     @BindView(R.id.buttonUpload)

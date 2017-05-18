@@ -30,10 +30,11 @@
                 android:layout_height="wrap_content"
                 android:lines="5" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="200dp"
                 android:layout_alignParentTop="true" />
 
             <LinearLayout

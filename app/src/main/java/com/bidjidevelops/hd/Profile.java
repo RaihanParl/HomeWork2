@@ -5,16 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,17 +43,25 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.senab.photoview.PhotoView;
 
+
 public class Profile extends AppCompatActivity {
     ArrayList<muser> data;
     PhotoView pvcomment;
+    @BindView(R.id.txtSekolah)
+    TextView txtSekolah;
+    @BindView(R.id.txtDesknya)
+    TextView txtDesknya;
+    @BindView(R.id.txtDesk)
+    TextView txtDesk;
     @BindView(R.id.btnEdit)
     Button btnEdit;
     @BindView(R.id.btnEditImage)
     Button btnEditImage;
-    @BindView(R.id.activity_profile)
-    ScrollView activityProfile;
-    @BindView(R.id.txtDesknya)
-    TextView txtDesknya;
+    @BindView(R.id.btnEditImagesam)
+    Button btnEditImagesam;
+    @BindView(R.id.coverimgpro)
+    ImageView coverimgpro;
+
     private LayoutInflater inflater;
 
     ImageView imgprof;
@@ -64,8 +71,8 @@ public class Profile extends AppCompatActivity {
     TextView txtSekolahnya;
     FrameLayout frameProfile;
     String email, username, sekolah, desk;
-    String getemail, getusername, getsekolah, getuserImager, getDesk;
-    String Spassword, Semail, Remail, userImager, getIdUser;
+    String getemail, getusername, getsekolah, getuserImager, getDesk,getCoverimg;
+    String Spassword, Semail, Remail, userImager, getIdUser, coverimg;
     public AQuery aQuery;
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
@@ -78,8 +85,11 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile2);
         ButterKnife.bind(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("");
         getIdUser = getIntent().getStringExtra("iduser");
         getusername = getIntent().getStringExtra("usernam");
         getuserImager = getIntent().getStringExtra("imageuser");
@@ -87,6 +97,7 @@ public class Profile extends AppCompatActivity {
         getDesk = getIntent().getStringExtra("desk");
         getsekolah = getIntent().getStringExtra("sekolah");
         getIdUser = getIntent().getStringExtra("iduser");
+        getCoverimg = getIntent().getStringExtra("coverimg");
         pvcomment = (PhotoView) findViewById(R.id.pvcomment);
         imgprof = (ImageView) findViewById(R.id.imgprof);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
@@ -105,6 +116,7 @@ public class Profile extends AppCompatActivity {
         if (iduserses.equals(getIdUser)) {
             btnEdit.setVisibility(View.VISIBLE);
             btnEditImage.setVisibility(View.VISIBLE);
+            btnEditImagesam.setVisibility(View.VISIBLE);
             getdata();
             getdata();
         } else {
@@ -113,6 +125,7 @@ public class Profile extends AppCompatActivity {
             txtDesknya.setText(getDesk);
             txtSekolahnya.setText(getsekolah);
             Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + getuserImager).placeholder(R.drawable.student).into(imgprof);
+            Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + getCoverimg).placeholder(R.drawable.logoreal).into(coverimgpro);
 
         }
 
@@ -152,6 +165,7 @@ public class Profile extends AppCompatActivity {
                             desk = object.getString("desk");
                             sekolah = object.getString("School");
                             deskripsi = object.getString("desk");
+                            coverimg = object.getString("coverimg");
                             data.add(d);
                             txtnamanya.setText(username);
                             txtEmailnya.setText(email);
@@ -159,6 +173,7 @@ public class Profile extends AppCompatActivity {
                             txtDesknya.setText(deskripsi);
                             //Toast.makeText(MainActivity.this, userImager, Toast.LENGTH_SHORT).show();
                             Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(imgprof);
+                            Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + coverimg).placeholder(R.drawable.logoreal).into(coverimgpro);
                         }
                     } else {
 //                        elseToast.makeText(getApplicationContext(), pesan, Toast.LENGTH_LONG).show();
@@ -231,7 +246,7 @@ public class Profile extends AppCompatActivity {
                                 /*jika result adalah benar, maka pindah ke activity login dan menampilkan pesan dari server,
                                 serta mematikan activity*/
                                             if (result.equalsIgnoreCase("true")) {
-                          getdata2();
+                                                getdata2();
 
                                             } else {
                                                 Helper.pesan(getApplicationContext(), msg);
@@ -263,6 +278,11 @@ public class Profile extends AppCompatActivity {
         i.putExtra("id_user", id);
         startActivity(i);
 
+    }
+    public void Imagesamp(View v){
+        Intent i = new Intent(getApplicationContext(), UpCover.class);
+        i.putExtra("id_user", id);
+        startActivity(i);
     }
 
     public void popupimg() {
@@ -306,7 +326,8 @@ public class Profile extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
     }
-    public void getdata2(){
+
+    public void getdata2() {
         sessionManager = new SessionManager(getApplicationContext());
         final HashMap<String, String> user = sessionManager.getUserDetails();
         Semail = user.get(SessionManager.kunci_email);
@@ -341,13 +362,15 @@ public class Profile extends AppCompatActivity {
                             desk = object.getString("desk");
                             sekolah = object.getString("School");
                             deskripsi = object.getString("desk");
+                            coverimg = object.getString("coverimg");
                             data.add(d);
                             txtnamanya.setText(username);
                             txtEmailnya.setText(email);
                             txtSekolahnya.setText(sekolah);
                             txtDesknya.setText(deskripsi);
                             //Toast.makeText(MainActivity.this, userImager, Toast.LENGTH_SHORT).show();
-                            Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).placeholder(R.drawable.student).into(imgprof);
+                            Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + userImager).into(imgprof);
+                            Glide.with(getApplicationContext()).load(Helper.BASE_IMGUS + coverimg).into(coverimgpro);
                         }
                     } else {
 //                        elseToast.makeText(getApplicationContext(), pesan, Toast.LENGTH_LONG).show();
@@ -374,4 +397,5 @@ public class Profile extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
+
 }
