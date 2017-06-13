@@ -21,8 +21,10 @@
             android:id="@+id/lltas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true">
 
             <EditText
                 android:id="@+id/editText"

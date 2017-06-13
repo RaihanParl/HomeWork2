@@ -62,9 +62,10 @@ public class MainActivity extends AppCompatActivity
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
     public NavigationView navigationView;
-    String Siduser,sekolah,Sdesk,Scoverimg;
+    String Siduser, sekolah, Sdesk, Scoverimg;
     ImageView coverImg;
     View header;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,18 +101,18 @@ public class MainActivity extends AppCompatActivity
         fragmentActivity.beginTransaction().replace(R.id.container, timelineMain).commit();
         navigationView.setNavigationItemSelectedListener(this);
 //        headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
-         header = navigationView.getHeaderView(0);
+        header = navigationView.getHeaderView(0);
         imguser = (ImageView) header.findViewById(R.id.imguser);
         imguser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent a = new Intent(getApplicationContext(), Profile.class);
-                a.putExtra("iduser",Siduser);
-                a.putExtra("imageuser",userImager);
-                a.putExtra("usernam",username);
-                a.putExtra("email",email);
-                a.putExtra("sekolah",sekolah);
-                a.putExtra("desk",Sdesk);
+                a.putExtra("iduser", Siduser);
+                a.putExtra("imageuser", userImager);
+                a.putExtra("usernam", username);
+                a.putExtra("email", email);
+                a.putExtra("sekolah", sekolah);
+                a.putExtra("desk", Sdesk);
                 startActivity(a);
             }
         });
@@ -133,10 +134,9 @@ public class MainActivity extends AppCompatActivity
 //        if (drawer.isDrawerOpen(GravityCompat.START)) {
 //            drawer.closeDrawer(GravityCompat.START);
 //        } else {
-            finish();
+        finish();
 //        }
     }
-
 
 
     @Override
@@ -170,10 +170,11 @@ public class MainActivity extends AppCompatActivity
             fragmentActivity.beginTransaction().replace(R.id.container, myquestion).commit();
         } else if (id == R.id.nav_send) {
             sessionManager.logout();
-        }else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_about) {
             About myquestion = new About();
             FragmentManager fragmentActivity = getSupportFragmentManager();
-            fragmentActivity.beginTransaction().replace(R.id.container, myquestion).commit();        }
+            fragmentActivity.beginTransaction().replace(R.id.container, myquestion).commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

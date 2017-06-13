@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by You on 20/04/2017.
  */
@@ -86,14 +88,14 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtusername_comment, txtsekolah_comment, txtcoment_coment,txtcoment_comentall;
-        ImageView imguser_comment, ivComment, imguser;
+        CircleImageView imguser_comment, ivComment, imguser;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtcoment_coment = (TextView) itemView.findViewById(R.id.txtcoment_coment);
             txtusername_comment = (TextView) itemView.findViewById(R.id.txtusername_comment);
             txtcoment_comentall = (TextView) itemView.findViewById(R.id.txtcomment_comentall);
-            imguser_comment = (ImageView) itemView.findViewById(R.id.imguser_comment);
+            imguser_comment = (CircleImageView) itemView.findViewById(R.id.imguser_comment);
         }
     }
 }
